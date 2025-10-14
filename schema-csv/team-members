@@ -1,0 +1,18 @@
+{
+    "fields": [
+        {
+            "name": "username",
+            "constraints": {
+                "required": true,
+                "pattern": "^[A-Za-z0-9_.-]+$"
+            }
+        },
+        {
+            "name": "role",
+            "constraints": {
+                "required": true,
+                "pattern": "^member$"
+            }
+        }
+    ]
+}

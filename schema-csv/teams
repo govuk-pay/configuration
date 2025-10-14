@@ -1,0 +1,25 @@
+{
+    "fields": [
+        {
+            "name": "name",
+            "constraints": {
+                "required": true,
+                "pattern": "^[a-z0-9-]+$"
+            }
+        },
+        {
+            "name": "description",
+            "constraints": {
+                "required": true,
+                "pattern": "^[\\w\\d \\-&.]+$"
+            }
+        },
+        {
+            "name": "privacy",
+            "constraints": {
+                "required": true,
+                "pattern": "^closed$"
+            }
+        }
+    ]
+}

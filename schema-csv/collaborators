@@ -1,0 +1,25 @@
+{
+    "fields": [
+        {
+            "name": "username",
+            "constraints": {
+                "required": true,
+                "pattern": "^[A-Za-z0-9_.-]+$"
+            }
+        },
+        {
+            "name": "repository",
+            "constraints": {
+                "required": true,
+                "pattern": "^[A-Za-z0-9_.-]+$"
+            }
+        },
+        {
+            "name": "permission",
+            "constraints": {
+                "required": true,
+                "pattern": "^(pull|push)$"
+            }
+        }
+    ]
+}

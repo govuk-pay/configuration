@@ -1,0 +1,11 @@
+{
+    "fields": [
+        {
+            "name": "username",
+            "constraints": {
+                "required": true,
+                "pattern": "^[A-Za-z0-9_.-]+$"
+            }
+        }
+    ]
+}
