@@ -11,7 +11,7 @@ This repository has been created to be automated by our existing access control 
 
 GitHub users and their permissions are pulled from the [pay-access-control](https://github.com/alphagov/pay-access-control) repository. This is aligned with GOV.UK Pay's access control policy to manage permissions for team members.
 
-In order to add a new team member to GitHub, ensure that they have a `github-user` key in their entry in [`users.yml`](https://github.com/alphagov/pay-access-control/blob/main/config/users.yml). Additionally they should be in a (user role)[https://github.com/alphagov/pay-access-control/tree/main/config/user-roles] specific to their role. For new starters, either new-tech or team-member depending on if they are a technologist or not.
+In order to add a new team member to GitHub, ensure that they have a `github-user` key in their entry in [`users.yml`](https://github.com/alphagov/pay-access-control/blob/main/config/users.yml). Additionally they should be in a [user role](https://github.com/alphagov/pay-access-control/tree/main/config/user-roles) specific to their role. For new starters, either new-tech or team-member depending on if they are a technologist or not.
 
 As part of the offboarding process, when someone is removed from pay-access-control, they will automatically be removed from this organisation.
 
