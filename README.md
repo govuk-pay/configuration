@@ -1,95 +1,31 @@
-THIS WILL NEED REWRITING
+# GOV.UK Pay GitHub Organisation Configuration
 
-Some of this may still be Digital Identity specific.
+This repository uses [pay-access-control](https://github.com/alphagov/pay-access-control) as its source of truth. Specifically, the [generate-csvs.sh script](https://github.com/govuk-pay/configuration/blob/main/scripts/generate-csvs.sh) will call Python scripts within pay-access-control to generate csv files to pass to Terraform to manage GitHub.
 
-# GitHub Organisation Configuration
-
-[![Teams and Members management](https://github.com/govuk-pay/configuration/actions/workflows/teams_and_members.yaml/badge.svg?branch=main)](https://github.com/govuk-pay/configuration/actions/workflows/teams_and_members.yaml)
+This repository has been created to be automated by our existing access control and JML processes, as such no actual data about users is stored here. It is important to ensure pay-access-control is kept up to date and accurate to maintain proper access to GitHub.
 
 ## User Management
-
-### Adding members to the organisation
 
 > [!NOTE]
 > When a new member is added to they will receive an invitation by e-mail to join the organization. They need to accept the invitation for GitHub to reflect the changes made in our configuration
 
-To be added to the organisation, the user must meet the Security Policy to be added to the organisation. [Access to GitHub](https://team-manual.account.gov.uk/new-starter-guide/github-access-management/)
+GitHub users and their permissions are pulled from the [pay-access-control](https://github.com/alphagov/pay-access-control) repository. This is aligned with GOV.UK Pay's access control policy to manage permissions for team members.
 
-Organisation member definitions are in [`members.csv` file](./teams/members.csv).
+In order to add a new team member to GitHub, ensure that they have a `github-user` key in their entry in [`users.yml`](https://github.com/alphagov/pay-access-control/blob/main/config/users.yml). Additionally they should be in a (user role)[https://github.com/alphagov/pay-access-control/tree/main/config/user-roles] specific to their role. For new starters, either new-tech or team-member depending on if they are a technologist or not.
 
-All GitHub users when added to the `govuk-pay` organisation must be added to this file.
-
-Terraform resource used is [`github_membership` resources](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/membership).
-
-### Adding outside collaborators to repositories
-
-Colleagues without Security Clearance (see [`policy`](https://team-manual.account.gov.uk/new-starter-guide/github-access-management/#for-colleagues-without-security-clearance) in DI Team Manual) can be added directly into the repositories they need to be concerned about, with the right least privilege level of access. The repository must exist prior to adding outside collaborators.
-
-**This does not apply to people joining the programme who just haven't got around to applying for SC yet - they should get that application in place before being given access to any tooling.**
-
-In [`collaborators.csv`](./teams/collaborators.csv) add a line per repository for each GitHub user. Permission levels are: `pull` for read-only access, `push` for write access.
-
-Example:
-
-```csv
-username,repository,permission
-john-doe,di-team-repo-a,push
-john-doe,architecture,pull
-```
-
-These users should not be added to members.csv, or any of the team-members/*.csv files.
+As part of the offboarding process, when someone is removed from pay-access-control, they will automatically be removed from this organisation.
 
 ## Team Management
 
-### Adding Teams
+Teams are automatically populated from the source of truth in pay-access-control. As teams are defined in the services config in that repository, they will be populated here.
 
-Organisation teams are created by adding the team name and description to [`teams.csv` file](./teams/teams.csv).
-
-Example:
-
-```csv
-name,description,privacy
-perf-testers,Perf Testing Team,closed
-dev-platform,Dev Platform,closed
-security-team,Security Team,closed
-```
-
-Terraform resources used are [`github_team` resources](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/team) and [`github_team_membership` resources](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/team_membership)
-
-### Adding members to teams
-
-Members are added to teams by creating a csv file in directory [`team-members`](./teams/team-members). The filename must match the team name as set in [`teams.csv` file](./teams/teams.csv).
-Add the members GitHub usernames to the file as shown in the example.
-
-Adding members to the `dev-platform` team, create a file in [`team-members`](./teams/team-members) called `dev-platform.csv`.
-
-Example:
-
-```csv
-username,role
-fpmrqs,member
-devdutoitGDS,member
-jamesmelville-gds,member
-```
-
-The team member must also be added to [`members.csv` file](./teams/members.csv) and this can be performed in the same commit.
-
-### Removing leavers from the program/organisation
-
-If someone who leaves the organisation has any personal access tokens used in GH actions these will need to be changed to
-a user who is still in the program. If the leaver is the last person to update the schedule line in a scheduled workflow
-this will also stop working when they leave the govuk-pay org. [See these docs for more info.](https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule)
-
-## Sort CSV files for everyone's sanity
-
-The `./sort-csvs.sh` command in the `teams/` directory will sort the CSV files above.
-This will keep everything nice and sane. Make sure to check it hasn't destroyed anything before you commit! :eyes:
+Additional teams may be defined for bots and other uses, these can be defined manually in Terraform unless there is a compelling reason to change this.
 
 ## Applying Terraform
 
-Raise a PR with your team and member changes. [`Pre-merge checks`](.github/workflows/pre-merge-checks.yaml) GitHub action will validate the csv files and run a plan to validate the terraform modules.
-
-When PR is merged, the [`Teams and Members management`](.github/workflows/teams_and_members.yaml) GitHub action will run some validation on the config and then apply on merge.
+> [!NOTE]
+> This will be filled out once we have a Concourse pipeline for applying this.
+> For now, it is manual while we are prototyping.
 
 # Organisation owners only
 
@@ -97,12 +33,11 @@ When PR is merged, the [`Teams and Members management`](.github/workflows/teams_
 
 ### Requirements
 
-* Terraform - consolidate version with [`versions.tf` file](./teams/versions.tf)
 * `GITHUB_TOKEN` - GitHub's Personal Access Token with `admin:org` and `repo` permissions
 * `GITHUB_OWNER` - GitHub organisation name, `govuk-pay`
-* S3 and dynamodb access to the di-devplatform-build-prod AWS account.
+* S3 and dynamodb access to the govuk-pay-deploy AWS account.
 
-It is also possible to run this locally with a valid GITHUB_TOKEN and access to AWS.
+Be extremely careful with GitHub PATs, they have a high level of access, especially as an organisation owner.
 
 1. Set github environment variables:
 
@@ -111,21 +46,15 @@ It is also possible to run this locally with a valid GITHUB_TOKEN and access to 
     export GITHUB_OWNER=govuk-pay
     ```
 
-2. Set AWS credentials:
+2. Initialise Terraform module:
 
     ```sh
-    gds aws di-devplatform-build-prod -s
-    ```
-
-3. Initialise Terraform module:
-
-    ```sh
-    terraform init
+    aws-vault exec deploy -- terraform init
     ```
 
 4. Plan and apply changes
 
     ```sh
-    terraform apply -target=github_team.all
-    terraform apply
+    aws-vault exec deploy -- terraform apply -target=github_team.all
+    aws-vault exec deploy -- terraform apply
     ```
