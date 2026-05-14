@@ -3,4 +3,9 @@ resource "github_membership" "all" {
 
   username = each.value.username
   role     = each.value.role
+
+  lifecycle {
+    ignore_changes = [ role ]
+  }
 }
+
