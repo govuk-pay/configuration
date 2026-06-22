@@ -18,8 +18,6 @@ terraform {
 }
 
 provider "github" {
- owner = "govuk-pay"
-
   app_auth {}
 }
 
