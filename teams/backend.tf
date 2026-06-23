@@ -18,4 +18,6 @@ terraform {
 }
 
 provider "github" {
+  app_auth {}
 }
+
