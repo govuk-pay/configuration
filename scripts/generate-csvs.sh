@@ -1,8 +1,8 @@
 #!/bin/bash
 set -eu
 
-CURRENT_DIRECTORY="$(dirname "${BASH_SOURCE[0]}")"
-cd ./$CURRENT_DIRECTORY/..
+CURRENT_DIRECTORY="$(cd -- "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+cd $CURRENT_DIRECTORY/..
 
 python -m pip install -r ../pay-access-control/scripts/requirements.txt
 
