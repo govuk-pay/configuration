@@ -2,7 +2,6 @@
 set -eu
 
 CURRENT_DIRECTORY="$(cd -- "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
-cd $CURRENT_DIRECTORY/..
 WORKSPACE="${WORKSPACE:-${CURRENT_DIRECTORY}/../..}"
 CSV_OUTPUT_PATH="${CSV_OUTPUT_PATH:-${CURRENT_DIRECTORY}/../teams}"
 
