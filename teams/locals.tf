@@ -1,13 +1,14 @@
 # Create local values to retrieve items from CSVs
 locals {
-  members_csv = csvdecode(file("members.csv"))
-  admins_csv  = csvdecode(file("admins.csv"))
+  csv_path    = coalesce(var.csv_path, path.root)
+  members_csv = csvdecode(file("${local.csv_path}/members.csv"))
+  admins_csv  = csvdecode(file("${local.csv_path}/admins.csv"))
   members = merge(
     { for member in local.members_csv : member.username => { username = member.username, role = "member" } },
     { for member in local.admins_csv : member.username => { username = member.username, role = "admin" } },
   )
   # Parse team member files
-  team_members_path = "team-members"
+  team_members_path = "${local.csv_path}/team-members"
   team_members_files = {
     for file in fileset(local.team_members_path, "*.csv") :
     trimsuffix(file, ".csv") => csvdecode(file("${local.team_members_path}/${file}"))
