@@ -7,9 +7,9 @@ CSV_OUTPUT_PATH="${CSV_OUTPUT_PATH:-${CURRENT_DIRECTORY}/../teams}"
 
 python -m pip install -r "${WORKSPACE}/pay-access-control/scripts/requirements.txt"
 
-python "${WORKSPACE}/pay-access-control/scripts/generate_members_csv.py" > "${CSV_OUTPUT_PATH}/members.csv"
-python "${WORKSPACE}/pay-access-control/scripts/generate_admins_csv.py" > "${CSV_OUTPUT_PATH}/admins.csv"
-python "${WORKSPACE}/pay-access-control/scripts/generate_teams_csv.py" > "${CSV_OUTPUT_PATH}/teams.csv"
+"${WORKSPACE}/pay-access-control/scripts/generate_members_csv.py" > "${CSV_OUTPUT_PATH}/members.csv"
+"${WORKSPACE}/pay-access-control/scripts/generate_admins_csv.py" > "${CSV_OUTPUT_PATH}/admins.csv"
+"${WORKSPACE}/pay-access-control/scripts/generate_teams_csv.py" > "${CSV_OUTPUT_PATH}/teams.csv"
 
 team_members_path="${CSV_OUTPUT_PATH}/team-members"
 mkdir -p "${team_members_path}"
@@ -20,6 +20,6 @@ do
     then
         ((skip_headers--))
     else
-        python "${WORKSPACE}/pay-access-control/scripts/generate_team_csv.py" $teamname > "${team_members_path}/$teamname.csv"
+        "${WORKSPACE}/pay-access-control/scripts/generate_team_csv.py" $teamname > "${team_members_path}/$teamname.csv"
     fi
 done < "${CSV_OUTPUT_PATH}/teams.csv"
