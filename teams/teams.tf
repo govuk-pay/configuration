@@ -1,6 +1,6 @@
 resource "github_team" "all" {
   for_each = {
-    for team in csvdecode(file(var.teams_csv)) :
+    for team in csvdecode(file("${local.csv_path}/teams.csv")) :
     team.name => team
   }
 
