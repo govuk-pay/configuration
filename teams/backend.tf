@@ -3,7 +3,7 @@ terraform {
 
   backend "s3" {
     bucket         = "pay-govuk-terraform-state-deploy"
-    key            = "github-configuration.tfstate"
+    key            = "deploy_github-configuration.tfstate"
     region         = "eu-west-1"
     acl            = "bucket-owner-read"
     dynamodb_table = "terraform_locks"
