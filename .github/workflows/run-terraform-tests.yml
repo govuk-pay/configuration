@@ -1,0 +1,13 @@
+name: Terraform Tests
+
+on:
+  pull_request:
+    paths:
+      - teams/**/*.tf
+      - .github/workflows/run-terraform-tests.yml
+
+jobs:
+  terraform-tests:
+    uses: alphagov/pay-ci/.github/workflows/_run-terraform-tests.yml@master
+    with:
+      terraform_folder: teams
