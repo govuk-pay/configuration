@@ -49,4 +49,8 @@ When prompted, enter the value of your Personal Access Token created above
 
 The script will fetch all repositories you have access to, loop through them, set the repositipries to be watched by you and check that watching the repository was successful
 
+# scripts/generate-csvs.sh
+## How to run
+This script requires the `PyYaml` package to run. This can be installed through `pip` or through a package manager if it's being run from linux.
 
+It also requires the `pay-access-control` repository to be present next to the top folder of this repo (e.g. if the `configuration` repo is at `/some/path/configuration` then the `pay-access-control` repo should be at `/some/path/pay-access-control`).
