@@ -5,8 +5,6 @@ CURRENT_DIRECTORY="$(cd -- "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && p
 WORKSPACE="${WORKSPACE:-${CURRENT_DIRECTORY}/../..}"
 CSV_OUTPUT_PATH="${CSV_OUTPUT_PATH:-${CURRENT_DIRECTORY}/../teams}"
 
-python -m pip install -r "${WORKSPACE}/pay-access-control/scripts/requirements.txt"
-
 "${WORKSPACE}/pay-access-control/scripts/generate_members_csv.py" > "${CSV_OUTPUT_PATH}/members.csv"
 "${WORKSPACE}/pay-access-control/scripts/generate_admins_csv.py" > "${CSV_OUTPUT_PATH}/admins.csv"
 "${WORKSPACE}/pay-access-control/scripts/generate_teams_csv.py" > "${CSV_OUTPUT_PATH}/teams.csv"
