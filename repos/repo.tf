@@ -6,5 +6,5 @@ module "repository" {
 }
 
 variable "repos" {
-  type = map(any)
+  type = any
 }
