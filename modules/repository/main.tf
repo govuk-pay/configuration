@@ -21,7 +21,7 @@ resource "github_repository" "this" {
 resource "github_actions_repository_permissions" "this" {
   repository           = github_repository.this.name
   enabled              = var.repository.actions_enabled
-  sha_pinning_required = true
+  sha_pinning_required = false
   allowed_actions      = "selected"
   allowed_actions_config {
     github_owned_allowed = true
