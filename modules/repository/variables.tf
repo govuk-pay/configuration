@@ -13,7 +13,7 @@ variable "repository" {
     license_template       = optional(string, null)
     topics                 = optional(list(string), [])
     actions_enabled        = optional(bool, true)
-    actions_allowed        = optional(list(string), [])
+    actions_allowed        = optional(list(string), ["ruby/*"])
     allow_push_to_main     = optional(bool, false)
     fast_forward_only      = optional(bool, false)
     required_status_checks = optional(list(string), [])
