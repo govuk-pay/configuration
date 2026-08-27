@@ -62,19 +62,31 @@ resource "github_branch_protection" "this" {
 resource "github_repository_collaborators" "this" {
   repository = github_repository.this.name
 
-  team {
-    team_id    = "team-payments"
-    permission = "push"
+  dynamic "team" {
+    for_each = var.repository.push_teams
+
+    content {
+      team_id    = team.value
+      permission = "push"
+    }
   }
 
-  team {
-    team_id    = "team-payments-admin"
-    permission = "admin"
+  dynamic "team" {
+    for_each = var.repository.admin_teams
+
+    content {
+      team_id    = team.value
+      permission = "admin"
+    }
   }
 
-  team {
-    team_id    = "team-payments-readonly"
-    permission = "pull"
+  dynamic "team" {
+    for_each = var.repository.pull_teams
+
+    content {
+      team_id    = team.value
+      permission = "pull"
+    }
   }
 }
 
