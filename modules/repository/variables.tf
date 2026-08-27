@@ -17,6 +17,9 @@ variable "repository" {
     allow_push_to_main     = optional(bool, false)
     fast_forward_only      = optional(bool, false)
     required_status_checks = optional(list(string), [])
+    push_teams             = optional(list(string), ["team-payments"])
+    admin_teams            = optional(list(string), ["team-payments-admin"])
+    pull_teams             = optional(list(string), ["team-payments-readonly"])
   })
   description = <<-EOF
   fast_forward_only: Defaults to `false`. Require branches to be up to date before they can be merged.
