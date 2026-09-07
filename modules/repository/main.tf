@@ -12,7 +12,7 @@ resource "github_repository" "this" {
   allow_squash_merge          = true
   allow_rebase_merge          = true
   allow_auto_merge            = false
-  allow_update_branch         = true
+  allow_update_branch         = false
   delete_branch_on_merge      = true
   web_commit_signoff_required = false
   archive_on_destroy          = true
