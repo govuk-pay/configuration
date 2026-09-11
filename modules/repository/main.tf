@@ -1,3 +1,7 @@
+locals {
+  default_actions_allowed = ["ruby/*", "advanced-security/*"]
+}
+
 resource "github_repository" "this" {
   name                        = var.name
   description                 = var.repository.description
@@ -25,7 +29,7 @@ resource "github_actions_repository_permissions" "this" {
   allowed_actions      = "selected"
   allowed_actions_config {
     github_owned_allowed = true
-    patterns_allowed     = var.repository.actions_allowed
+    patterns_allowed     = concat(var.repository.actions_allowed, local.default_actions_allowed)
   }
 }
 
