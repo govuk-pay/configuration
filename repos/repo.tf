@@ -6,5 +6,12 @@ module "repository" {
 }
 
 variable "repos" {
-  type = any
+  type        = any
+  description = <<-EOF
+  A map of objects, where the key is the name of a repository and its object
+contains the attributes to configure the repository.
+
+  Each attribute and its documentation can be found in the `repository` module
+(see ../modules/repository/variables.tf).
+  EOF
 }
