@@ -17,3 +17,9 @@ resource "github_team_membership" "members" {
   username = each.value.username
   role     = each.value.role
 }
+
+resource "github_team_membership" "concourse_bot" {
+  team_id  = "team-payments"
+  username = "alphagov-pay-ci-concourse"
+  role     = "member"
+}
