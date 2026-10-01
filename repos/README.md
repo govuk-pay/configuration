@@ -35,3 +35,24 @@ question, for example:
 This must be the name of the check as it appears within the GitHub UI in the
 `Checks` tab - you may need to expand each workflow to find the name for the job
 you wish to add.
+
+## Allowing third party actions
+
+By default the only actions allowed are those which have been created by
+GitHub or those within the enterprise. We also globally allow actions from the
+`ruby` organisation, such as `setup-ruby`.
+
+After carefully considering
+[whether a third party action should be used](https://manual.payments.service.gov.uk/manual/tools/github.html#when-to-use-a-third-party-action),
+you can set the `actions_allowed` attribute to the list of allowed actions.
+Wildcards, tags, and SHAs are allowed. For example:
+
+``` json
+    "pay-cli": {
+      "visibility": "private",
+      "description": "GOV.UK Pay Command Line Interface",
+      "actions_allowed": [
+        "org/repo@*"
+      ]
+    },
+```
