@@ -4,21 +4,23 @@ resource "github_team" "all" {
     team.name => team
   }
 
-  name                      = each.value.name
-  description               = each.value.description
-  privacy                   = each.value.privacy
+  name        = each.value.name
+  description = each.value.description
+  privacy     = each.value.privacy
 }
 
-resource "github_team_membership" "members" {
-  for_each = { for tm in local.team_members : tm.name => tm }
+resource "github_team_members" "members" {
+  for_each = {
+    for tm in local.team_members : tm.slug => tm.members if length(tm.members) > 0
+  }
 
-  team_id  = each.value.team_id
-  username = each.value.username
-  role     = each.value.role
-}
+  team_slug = each.key
 
-resource "github_team_membership" "concourse_bot" {
-  team_id  = "team-payments"
-  username = "alphagov-pay-ci-concourse"
-  role     = "member"
+  dynamic "members" {
+    for_each = each.value
+    content {
+      username = members.value.username
+      role     = members.value.role
+    }
+  }
 }
