@@ -7,7 +7,6 @@ resource "github_team" "all" {
   name                      = each.value.name
   description               = each.value.description
   privacy                   = each.value.privacy
-  create_default_maintainer = false
 }
 
 resource "github_team_membership" "members" {
