@@ -8,4 +8,4 @@ on:
 
 jobs:
   terraform-tests:
-    uses: govuk-pay/pay-ci/.github/workflows/_run-terraform-tests.yml@7f496e4a3e502270ad5973d34c59a4285c831f1c
+    uses: govuk-pay/pay-ci/.github/workflows/_run-terraform-tests.yml@bc6ed6b7584f8ffa2049f546d0d4534cbb5cc5e0
