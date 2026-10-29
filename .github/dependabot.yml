@@ -17,8 +17,18 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    open-pull-requests-limit: 3
+    open-pull-requests-limit: 0
+  - package-ecosystem: github-actions
     groups:
       pay-ci:
         patterns:
         - govuk-pay/pay-ci/*
+    directory: /.github/workflows
+    schedule:
+      interval: daily
+      time: "03:00"
+    open-pull-requests-limit: 3
+    cooldown:
+      default-days: 3
+    allow:
+    - dependency-name: govuk-pay/pay-ci/*
