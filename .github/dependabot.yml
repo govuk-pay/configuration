@@ -18,3 +18,7 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 3
+    groups:
+      pay-ci:
+        patterns:
+        - govuk-pay/pay-ci/*
